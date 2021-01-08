@@ -23,6 +23,7 @@ export interface ConfigurationParameters {
     formDataCtor?: new () => any;
 }
 
+
 export class Configuration {
     /**
      * parameter for apiKey security

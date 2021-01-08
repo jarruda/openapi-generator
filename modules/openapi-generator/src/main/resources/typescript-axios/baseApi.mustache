@@ -6,6 +6,9 @@ import { Configuration } from "./configuration";
 // Some imports not used depending on template conditions
 // @ts-ignore
 import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
+{{#withAWSV4Signature}}
+import { aws4Interceptor } from 'aws4-axios';
+{{/withAWSV4Signature}}
 
 export const BASE_PATH = "{{{basePath}}}".replace(/\/+$/, "");
 
@@ -42,6 +45,14 @@ export class BaseAPI {
         if (configuration) {
             this.configuration = configuration;
             this.basePath = configuration.basePath || this.basePath;
+            {{#withAWSV4Signature}}
+            const requestSigningInterceptor = aws4Interceptor({
+                region: this.configuration.awsSigningRegion,
+                service: this.configuration.awsSigningService
+            }, this.configuration.awsCredentials);
+
+            axios.interceptors.request.use(requestSigningInterceptor);
+            {{/withAWSV4Signature}}
         }
     }
 };

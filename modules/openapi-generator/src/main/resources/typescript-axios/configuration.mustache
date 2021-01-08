@@ -19,6 +19,30 @@ export class Configuration {
      * @memberof Configuration
      */
     apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
+    {{#withAWSV4Signature}}
+    /**
+     * parameter for aws sigv4 request signing
+     * specifies credentials to be used when signing requests.
+     * if not specified credentials will be looked for in process.env,
+     * according to aws4 documentation: https://github.com/mhart/aws4/blob/master/README.md
+     */
+    awsCredentials?: {
+        secretAccessKey: string;
+        accessKeyId: string;
+        sessionToken?: string;
+    };
+    /**
+     * parameter for aws sigv4 request signing
+     * specifies the region to be used when signing the requst.
+     * if not specified one will be extracted from the URL if present, and us-east-1 is used otherwise.
+     */
+    awsSigningRegion?: string;
+    /**
+     * parameter for aws sigv4 request signing
+     * specifies the service name to be used when signing the request. Use "execute-api" for API Gateway.
+     */
+    awsSigningService?: string;
+    {{/withAWSV4Signature}}
     /**
      * parameter for basic security
      *

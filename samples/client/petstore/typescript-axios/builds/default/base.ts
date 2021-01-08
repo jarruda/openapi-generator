@@ -18,6 +18,7 @@ import { Configuration } from "./configuration";
 // @ts-ignore
 import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
 
+
 export const BASE_PATH = "http://petstore.swagger.io/v2".replace(/\/+$/, "");
 
 /**
@@ -53,6 +54,7 @@ export class BaseAPI {
         if (configuration) {
             this.configuration = configuration;
             this.basePath = configuration.basePath || this.basePath;
+
         }
     }
 };
